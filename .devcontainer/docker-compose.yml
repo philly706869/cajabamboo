@@ -1,0 +1,30 @@
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+    volumes:
+      - ..:/cajabamboo
+    command: sleep infinity
+    ports:
+      - 4321:4321
+      - 3000:3000
+    environment:
+      - NODE_ENV=development
+      - CAJABAMBOO_PORT=3000
+      - CAJABAMBOO_DB_HOST=db
+      - CAJABAMBOO_DB_PORT=5432
+      - CAJABAMBOO_DB_USER=cajabamboo
+      - CAJABAMBOO_DB_PASSWORD=cajabamboo
+      - CAJABAMBOO_DB_NAME=cajabamboo
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17-bookworm
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: cajabamboo
+      POSTGRES_PASSWORD: cajabamboo
+      POSTGRES_DB: cajabamboo

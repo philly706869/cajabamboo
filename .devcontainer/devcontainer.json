@@ -1,0 +1,23 @@
+{
+  "name": "CAJA Bamboo Dev Container",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "dev",
+  "workspaceFolder": "/cajabamboo",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "astro-build.astro-vscode",
+        "dbaeumer.vscode-eslint",
+        "docker.docker",
+        "esbenp.prettier-vscode",
+        "ms-azuretools.vscode-containers",
+        "ms-azuretools.vscode-docker",
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml"
+      ]
+    }
+  },
+  "remoteEnv": {
+    "CHOKIDAR_USEPOLLING": "true"
+  }
+}
