@@ -1,0 +1,315 @@
+openapi: 3.1.0
+info:
+  title: API Spec
+servers:
+  - url: http://localhost:4321/api
+paths:
+  /categories:
+    get:
+      summary: 모든 카테고리 조회
+      responses:
+        "200":
+          description: 카테고리 목록
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 카테고리 ID
+                    name:
+                      type: string
+                      description: 카테고리 이름
+  /categories/{id}/posts:
+    get:
+      summary: 특정 카테고리의 게시글 조회
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 조회할 카테고리의 ID
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          required: true
+          description: 게시글 목록의 시작 위치
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: true
+          description: 게시글 목록의 최대 개수
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: 카테고리 정보
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  postCount:
+                    type: integer
+                    description: 카테고리에 속한 게시글 수
+                  posts:
+                    type: array
+                    description: 카테고리에 속한 게시글 목록
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: 게시글 ID
+                        author:
+                          type: object
+                          description: 게시글 작성자 정보
+                          properties:
+                            name:
+                              type: string
+                              description: 작성자 이름
+                            hash:
+                              type: string
+                              description: 작성자 해시
+                        category:
+                          type: object
+                          description: 게시글이 속한 카테고리 정보
+                          properties:
+                            id:
+                              type: integer
+                              description: 카테고리 ID
+                            name:
+                              type: string
+                              description: 카테고리 이름
+                        title:
+                          type: string
+                          description: 게시글 제목
+                        createdAt:
+                          type: string
+                          description: 게시글 작성 시간
+        "404":
+          description: 카테고리를 찾을 수 없음
+  /posts:
+    post:
+      summary: 새 게시글 작성
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  description: 게시글 작성자 이름
+                password:
+                  type: string
+                  description: 게시글 비밀번호
+                categoryId:
+                  type: integer
+                  description: 게시글이 속할 카테고리 ID
+                title:
+                  type: string
+                  description: 게시글 제목
+                content:
+                  type: string
+                  description: 게시글 내용
+      responses:
+        "201":
+          description: 게시글이 성공적으로 생성됨
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: 생성된 게시글의 ID
+  /posts/{id}:
+    get:
+      summary: 특정 게시글 조회
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 조회할 게시글의 ID
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: 게시글 정보
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: 게시글 ID
+                  author:
+                    type: object
+                    description: 게시글 작성자 정보
+                    properties:
+                      name:
+                        type: string
+                        description: 작성자 이름
+                      hash:
+                        type: string
+                        description: 작성자 해시
+                  category:
+                    type: object
+                    description: 게시글이 속한 카테고리 정보
+                    properties:
+                      id:
+                        type: integer
+                        description: 카테고리 ID
+                      name:
+                        type: string
+                        description: 카테고리 이름
+                  title:
+                    type: string
+                    description: 게시글 제목
+                  content:
+                    type: string
+                    description: 게시글 내용
+                  createdAt:
+                    type: string
+                    description: 게시글 작성 시간
+        "404":
+          description: 게시글을 찾을 수 없음
+    delete:
+      summary: 특정 게시글 삭제
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 삭제할 게시글의 ID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: 게시글 비밀번호
+      responses:
+        "204":
+          description: 게시글이 성공적으로 삭제됨
+        "404":
+          description: 게시글을 찾을 수 없음
+  /posts/{id}/comments:
+    get:
+      summary: 특정 게시글의 댓글 조회
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 댓글을 조회할 게시글의 ID
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          required: true
+          description: 댓글 목록의 시작 위치
+          schema:
+            type: integer
+        - name: limit
+          in: query
+          required: true
+          description: 댓글 목록의 최대 개수
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: 댓글 목록
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: 댓글 ID
+                    author:
+                      type: object
+                      description: 댓글 작성자 정보
+                      properties:
+                        name:
+                          type: string
+                          description: 작성자 이름
+                        hash:
+                          type: string
+                          description: 작성자 해시
+                    content:
+                      type: string
+                      description: 댓글 내용
+                    createdAt:
+                      type: string
+                      description: 댓글 작성 시간
+        "404":
+          description: 게시글을 찾을 수 없음
+    post:
+      summary: 게시글에 댓글 작성
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 댓글을 작성할 게시글의 ID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                author:
+                  type: string
+                  description: 댓글 작성자 이름
+                password:
+                  type: string
+                  description: 댓글 비밀번호
+                content:
+                  type: string
+                  description: 댓글 내용
+      responses:
+        "201":
+          description: 댓글이 성공적으로 작성됨
+        "404":
+          description: 게시글을 찾을 수 없음
+  /comments/{id}:
+    delete:
+      summary: 특정 댓글 삭제
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: 삭제할 댓글의 ID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: 댓글 비밀번호
+      responses:
+        "204":
+          description: 댓글이 성공적으로 삭제됨
+        "404":
+          description: 댓글을 찾을 수 없음

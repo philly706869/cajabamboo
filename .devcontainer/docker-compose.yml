@@ -19,6 +19,8 @@ services:
       - CAJABAMBOO_DB_NAME=cajabamboo
     depends_on:
       - db
+      - mock
+      - openapi
 
   db:
     image: postgres:17-bookworm
@@ -28,3 +30,18 @@ services:
       POSTGRES_USER: cajabamboo
       POSTGRES_PASSWORD: cajabamboo
       POSTGRES_DB: cajabamboo
+
+  mock:
+    image: stoplight/prism:5
+    volumes:
+      - ../openapi/openapi.yaml:/openapi.yaml:ro
+    command: ["mock", "--host", "0.0.0.0", "/openapi.yaml"]
+
+  openapi:
+    image: nginx:alpine
+    volumes:
+      - ../openapi/nginx.conf:/etc/nginx/conf.d/no-cache.conf:ro
+      - ../openapi/api-doc.html:/usr/share/nginx/html/index.html:ro
+      - ../openapi/openapi.yaml:/usr/share/nginx/html/openapi.yaml:ro
+    ports:
+      - 8080:80
