@@ -6,7 +6,10 @@ export default defineConfig({
   vite: {
     server: {
       proxy: {
-        "/api": "http://mock:4010",
+        "/api": {
+          target: "http://mock:4010",
+          rewrite: (path) => path.replace(/^\/api/, ""),
+        },
       },
     },
   },
