@@ -6,13 +6,13 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "astro-build.astro-vscode",
         "dbaeumer.vscode-eslint",
         "docker.docker",
         "esbenp.prettier-vscode",
         "ms-azuretools.vscode-containers",
         "ms-azuretools.vscode-docker",
         "rust-lang.rust-analyzer",
+        "svelte.svelte-vscode",
         "tamasfe.even-better-toml"
       ]
     }
