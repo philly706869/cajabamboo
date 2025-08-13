@@ -1,4 +1,4 @@
-FROM node:22-bookworm AS builder
+FROM node:22-trixie AS builder
 COPY . /app
 WORKDIR /app
 RUN npm i && npm run build

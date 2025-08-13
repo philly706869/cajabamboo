@@ -22,7 +22,7 @@ services:
       - openapi
 
   db:
-    image: postgres:17-bookworm
+    image: postgres:17-trixie
     ports:
       - 5432:5432
     environment:

@@ -1,15 +1,13 @@
-FROM node:22-bookworm
+FROM rust:trixie
 
-RUN apt-get update && apt-get install -y \
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+  && apt-get update && apt-get install -y \
+  nodejs \
   wget \
   gnupg2 \
   git \
-  && apt-get clean
-
-RUN npm i -g npm@latest
-
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
-  && . "$HOME/.cargo/env" \
+  && apt-get clean \
+  && npm i -g npm@latest \
   && rustup component add rustfmt
 
 WORKDIR /cajabamboo
