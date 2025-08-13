@@ -21,6 +21,11 @@ paths:
                     name:
                       type: string
                       description: 카테고리 이름
+              example:
+                - id: 0
+                  name: 자유 게시판
+                - id: 1
+                  name: 문의사항
   /categories/{id}/posts:
     get:
       summary: 카테고리 게시글 조회
@@ -31,18 +36,21 @@ paths:
           description: 조회할 카테고리의 ID
           schema:
             type: integer
+          example: 0
         - name: offset
           in: query
           required: true
           description: 게시글 목록의 시작 위치
           schema:
             type: integer
+          example: 0
         - name: limit
           in: query
           required: true
           description: 게시글 목록의 최대 개수
           schema:
             type: integer
+          example: 20
       responses:
         "200":
           description: 카테고리 정보
@@ -89,11 +97,41 @@ paths:
                         createdAt:
                           type: string
                           description: 게시글 작성 시간
+              example:
+                postCount: 3
+                posts:
+                  - id: 0
+                    author:
+                      name: 익명
+                      hash: deb31d415ad39db3
+                    category:
+                      id: 0
+                      name: 자유 게시판
+                    title: 게시물 1
+                    createdAt: 2025-08-13T14:23:40.926Z
+                  - id: 1
+                    author:
+                      name: 익명
+                      hash: 7e6daed71421bf35
+                    category:
+                      id: 0
+                      name: 자유 게시판
+                    title: 게시물 2
+                    createdAt: 2025-08-13T14:23:40.926Z
+                  - id: 2
+                    author:
+                      name: 익명
+                      hash: f91c5c2dd839cd5e
+                    category:
+                      id: 0
+                      name: 자유 게시판
+                    title: 게시물 3
+                    createdAt: 2025-08-13T14:23:40.926Z
         "404":
           description: 카테고리를 찾을 수 없음
   /posts:
     post:
-      summary: 새 게시글 작성
+      summary: 게시글 생성
       requestBody:
         required: true
         content:
@@ -116,6 +154,12 @@ paths:
                 content:
                   type: string
                   description: 게시글 내용
+            example:
+              author: "익명"
+              password: "password123"
+              categoryId: 0
+              title: "게시글 1"
+              content: "안녕하세요"
       responses:
         "201":
           description: 게시글이 성공적으로 생성됨
@@ -127,6 +171,8 @@ paths:
                   id:
                     type: integer
                     description: 생성된 게시글의 ID
+              example:
+                id: 0
   /posts/{id}:
     get:
       summary: 게시글 조회
@@ -137,6 +183,7 @@ paths:
           description: 조회할 게시글의 ID
           schema:
             type: integer
+          example: 0
       responses:
         "200":
           description: 게시글 정보
@@ -177,6 +224,17 @@ paths:
                   createdAt:
                     type: string
                     description: 게시글 작성 시간
+              example:
+                id: 0
+                author:
+                  name: 익명
+                  hash: deb31d415ad39db3
+                category:
+                  id: 0
+                  name: 자유 게시판
+                title: 게시물 1
+                content: 안녕하세요
+                createdAt: 2025-08-13T14:23:40.926Z
         "404":
           description: 게시글을 찾을 수 없음
     delete:
@@ -188,6 +246,7 @@ paths:
           description: 삭제할 게시글의 ID
           schema:
             type: integer
+          example: 0
       requestBody:
         required: true
         content:
@@ -198,14 +257,18 @@ paths:
                 password:
                   type: string
                   description: 게시글 비밀번호
+            example:
+              password: "password123"
       responses:
         "204":
           description: 게시글이 성공적으로 삭제됨
+        "403":
+          description: 비밀번호가 일치하지 않음
         "404":
           description: 게시글을 찾을 수 없음
   /posts/{id}/comments:
     get:
-      summary: 게시글 댓글 조회
+      summary: 댓글 조회
       parameters:
         - name: id
           in: path
@@ -213,18 +276,21 @@ paths:
           description: 댓글을 조회할 게시글의 ID
           schema:
             type: integer
+          example: 0
         - name: offset
           in: query
           required: true
           description: 댓글 목록의 시작 위치
           schema:
             type: integer
+          example: 0
         - name: limit
           in: query
           required: true
           description: 댓글 목록의 최대 개수
           schema:
             type: integer
+          example: 20
       responses:
         "200":
           description: 댓글 목록
@@ -254,10 +320,23 @@ paths:
                     createdAt:
                       type: string
                       description: 댓글 작성 시간
+              example:
+                - id: 0
+                  author:
+                    name: 익명
+                    hash: 7e6daed71421bf35
+                  content: 안녕하세요
+                  createdAt: 2025-08-13T14:23:40.926Z
+                - id: 1
+                  author:
+                    name: 익명
+                    hash: f91c5c2dd839cd5e
+                  content: 안녕하세요
+                  createdAt: 2025-08-13T14:23:40.926Z
         "404":
           description: 게시글을 찾을 수 없음
     post:
-      summary: 게시글 댓글 작성
+      summary: 댓글 생성
       parameters:
         - name: id
           in: path
@@ -265,6 +344,7 @@ paths:
           description: 댓글을 작성할 게시글의 ID
           schema:
             type: integer
+          example: 0
       requestBody:
         required: true
         content:
@@ -281,6 +361,10 @@ paths:
                 content:
                   type: string
                   description: 댓글 내용
+            example:
+              author: "익명"
+              password: "password123"
+              content: "안녕하세요"
       responses:
         "201":
           description: 댓글이 성공적으로 작성됨
@@ -296,6 +380,7 @@ paths:
           description: 삭제할 댓글의 ID
           schema:
             type: integer
+          example: 0
       requestBody:
         required: true
         content:
@@ -306,8 +391,12 @@ paths:
                 password:
                   type: string
                   description: 댓글 비밀번호
+            example:
+              password: "password123"
       responses:
         "204":
           description: 댓글이 성공적으로 삭제됨
+        "403":
+          description: 비밀번호가 일치하지 않음
         "404":
           description: 댓글을 찾을 수 없음
