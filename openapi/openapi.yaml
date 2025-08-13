@@ -1,8 +1,6 @@
 openapi: 3.1.0
 info:
   title: API Spec
-servers:
-  - url: http://localhost:4321/api
 paths:
   /categories:
     get:

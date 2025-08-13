@@ -7,16 +7,15 @@ services:
       - ..:/cajabamboo
     command: sleep infinity
     ports:
-      - 4321:4321
       - 3000:3000
     environment:
-      - NODE_ENV=development
-      - CAJABAMBOO_PORT=3000
-      - CAJABAMBOO_DB_HOST=db
-      - CAJABAMBOO_DB_PORT=5432
-      - CAJABAMBOO_DB_USER=cajabamboo
-      - CAJABAMBOO_DB_PASSWORD=cajabamboo
-      - CAJABAMBOO_DB_NAME=cajabamboo
+      - CAJABAMBOO_SERVER_HOST=0.0.0.0
+      - CAJABAMBOO_SERVER_PORT=3000
+      - CAJABAMBOO_WORKER_THREADS=8
+      - CAJABAMBOO_MAX_BLOCKING_THREADS=16
+      - CAJABAMBOO_DATABASE_URL=postgres://cajabamboo:cajabamboo@db:5432/cajabamboo
+      - CAJABAMBOO_DATABASE_CONNECTION_LIMIT=10
+      - CAJABAMBOO_API_URL=http://mock:4010
     depends_on:
       - db
       - mock
