@@ -1,6 +1,11 @@
 [package]
-name = "cajabamboo-backend"
+name    = "cajabamboo-backend"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+actix-web = "4.11"
+config    = "0.15"
+serde     = { version = "1", features = ["derive"] }
+sqlx      = { version = "0.8", features = ["postgres", "runtime-tokio", "macros"] }
+tokio     = { version = "1.47", features = ["full"] }
