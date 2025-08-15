@@ -17,8 +17,5 @@
         "tamasfe.even-better-toml"
       ]
     }
-  },
-  "remoteEnv": {
-    "CHOKIDAR_USEPOLLING": "true"
   }
 }

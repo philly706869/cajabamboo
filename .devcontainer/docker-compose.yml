@@ -1,3 +1,6 @@
+volumes:
+  node_modules_cache:
+
 services:
   dev:
     build:
@@ -5,6 +8,7 @@ services:
       dockerfile: .devcontainer/Dockerfile
     volumes:
       - ..:/cajabamboo
+      - node_modules_cache:/cajabamboo/frontend/node_modules
     command: sleep infinity
     ports:
       - 3000:3000
