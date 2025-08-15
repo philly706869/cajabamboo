@@ -23,8 +23,5 @@
       ]
     }
   },
-  "remoteUser": "vscode",
-  "remoteEnv": {
-    "CHOKIDAR_USEPOLLING": "true"
-  }
+  "remoteUser": "vscode"
 }
