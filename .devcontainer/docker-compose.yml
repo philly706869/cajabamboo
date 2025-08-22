@@ -1,4 +1,5 @@
 volumes:
+  target:
   node_modules:
 
 services:
@@ -8,6 +9,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ..:/workspaces/cajabamboo:cached
+      - target:/workspaces/cajabamboo/backend/target:cached
       - node_modules:/workspaces/cajabamboo/frontend/node_modules:cached
     command: sleep infinity
     ports:
