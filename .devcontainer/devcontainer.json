@@ -1,23 +1,29 @@
 {
-  "name": "CAJA Bamboo Dev Container",
+  "name": "CAJA Bamboo",
   "dockerComposeFile": "docker-compose.yml",
-  "service": "dev",
-  "workspaceFolder": "/cajabamboo",
+  "service": "app",
+  "workspaceFolder": "/workspaces/cajabamboo",
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "username": "vscode",
+      "userUid": "1000",
+      "userGid": "1000"
+    }
+  },
   "customizations": {
     "vscode": {
       "extensions": [
         "dbaeumer.vscode-eslint",
-        "docker.docker",
         "esbenp.prettier-vscode",
         "github.vscode-github-actions",
         "ms-azuretools.vscode-containers",
-        "ms-azuretools.vscode-docker",
         "rust-lang.rust-analyzer",
         "svelte.svelte-vscode",
         "tamasfe.even-better-toml"
       ]
     }
   },
+  "remoteUser": "vscode",
   "remoteEnv": {
     "CHOKIDAR_USEPOLLING": "true"
   }

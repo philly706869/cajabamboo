@@ -1,10 +1,14 @@
+volumes:
+  node_modules:
+
 services:
-  dev:
+  app:
     build:
-      context: ..
-      dockerfile: .devcontainer/Dockerfile
+      context: .
+      dockerfile: Dockerfile
     volumes:
-      - ..:/cajabamboo
+      - ..:/workspaces/cajabamboo:cached
+      - node_modules:/workspaces/cajabamboo/frontend/node_modules:cached
     command: sleep infinity
     ports:
       - 3000:3000
